@@ -86,8 +86,8 @@ run_command(f"aws eks update-kubeconfig \
     --region us-west-2 --name {EKS_CLUSTER_NAME}")
 
 print("Applying Kubernetes...")
-run_command("kubectl apply -f service-deployment.yaml")
-run_command("kubectl apply -f app-deployment.yaml")
+run_command("kubectl apply -f service-deployment.yaml", cwd=K8S_DIR)
+run_command("kubectl apply -f app-deployment.yaml", cwd=K8S_DIR)
 
 print("Waiting for external IP to become available...")
 time.sleep(30)
@@ -96,3 +96,18 @@ while not EXTERNAL_IP:
     EXTERNAL_IP = run_command("kubectl get service leo-flask-svc \
         -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'").strip()
 print(f"Application is accessible at: http://{EXTERNAL_IP}:8080/api/v1/message")
+
+# Prompt user to clean up
+while True:
+    user_input = input("Would you like to clean up? (yes or no): ")
+    if user_input.lower() == "yes":
+        run_command("kubectl delete -f service-deployment.yaml", cwd=K8S_DIR)
+        run_command("kubectl delete -f app-deployment.yaml", cwd=K8S_DIR)
+        run_command("aws ecr batch-delete-image \
+                    --repository-name leo-flask-ecr-repo \
+                    --image-ids imageTag=dev")
+        run_command("terraform destroy -auto-approve", cwd=TERRAFORM_DIR)
+        break
+    if user_input.lower() == "no":
+        continue
+    print("Invalid input.")
