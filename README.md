@@ -1,23 +1,31 @@
 # Leo-Liatrio
 
-## local branch
+## dev branch
 
-In order to run on local you must have Docker and a Kubernetes manager running on your machine.
+Tools that need to be installed:
+Python
+    - pip ruamel.yaml
+AWS CLI
+Terraform
+Docker
+kubectl
 
-Create the image from the Dockerfile:
+AWS CLI must be logged in as a role that can run the deploy script.
+Permissions needed:
+- IAM
+- ECR
+- EKS
+- VPC
+- EC2
+
+Connect to AWS (Run the following command and then input Access Key and Secret Key when prompted):
 
 ```sh
-docker build -t leo-flask-liatrio:local .
+aws configure
 ```
 
-Verify with:
+Run the deployment python script:
 
 ```sh
-docker images
-```
-
-Deploy the containers:
-
-```sh
-kubectl apply -f app-deployment.yaml
+python3 deploy.py
 ```
