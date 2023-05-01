@@ -3,12 +3,11 @@
 ## dev branch
 
 Tools that need to be installed:
-Python
-    - pip ruamel.yaml
-AWS CLI
-Terraform
-Docker
-kubectl
+- Python and pip ruamel.yaml
+- AWS CLI
+- Terraform
+- Docker
+- kubectl
 
 AWS CLI must be logged in as a role that can run the deploy script.
 Permissions needed:

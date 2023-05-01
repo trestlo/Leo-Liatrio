@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: leo-flask-container
-        image: 573659326041.dkr.ecr.us-west-2.amazonaws.com/leo-flask-ecr-repo:dev
+        image: IMAGE
         resources:
           limits:
             memory: "128Mi"
