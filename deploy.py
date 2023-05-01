@@ -60,10 +60,6 @@ EKS_CLUSTER_NAME = run_command("terraform output cluster_name", \
                                  cwd=TERRAFORM_DIR) \
                                 .rsplit('= ', maxsplit=1)[-1].rstrip()
 
-# EKS_CLUSTER_NAME = run_command("terraform output cluster_name", \
-#                                cwd=TERRAFORM_DIR)\
-#                                 .rsplit('= ', maxsplit=1)[-1].rstrip()
-
 # Push the Docker image to ECR
 print("Building and pushing Docker image...")
 run_command("docker build -t leo-flask-liatrio:dev .", \
