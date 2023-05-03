@@ -25,22 +25,22 @@ def run_command(command, cwd=None):
 TERRAFORM_DIR = "./terraform"
 K8S_DIR = "./k8s-flask"
 
-# Plan Terraform and display output
-PLAN_OUTPUT = run_command("terraform init", cwd=TERRAFORM_DIR)
-PLAN_OUTPUT = run_command("terraform plan", cwd=TERRAFORM_DIR)
-print(PLAN_OUTPUT)
+# # Plan Terraform and display output
+# PLAN_OUTPUT = run_command("terraform init", cwd=TERRAFORM_DIR)
+# PLAN_OUTPUT = run_command("terraform plan", cwd=TERRAFORM_DIR)
+# print(PLAN_OUTPUT)
 
-# Prompt user to apply
-while True:
-    user_input = input("Would you like to apply this Terraform? (yes or no): ")
-    if user_input.lower() == "yes":
-        print("Applying Terraform...")
-        run_command("terraform apply -auto-approve", cwd=TERRAFORM_DIR)
-        break
-    if user_input.lower() == "no":
-        sys.exit("User declined to apply. No changes made.")
-    print("Invalid input.")
-print("Terraform applied.")
+# # Prompt user to apply
+# while True:
+#     user_input = input("Would you like to apply this Terraform? (yes or no): ")
+#     if user_input.lower() == "yes":
+#         print("Applying Terraform...")
+#         run_command("terraform apply -auto-approve", cwd=TERRAFORM_DIR)
+#         break
+#     if user_input.lower() == "no":
+#         sys.exit("User declined to apply. No changes made.")
+#     print("Invalid input.")
+# print("Terraform applied.")
 
 # Get account ID and log into ECR
 AWS_ACCOUNT_ID = run_command("aws sts get-caller-identity \
@@ -75,7 +75,8 @@ with open('./k8s-flask/app-deployment.yaml', 'r') as f:
     data = yaml.load(f)
 
 # Update the image value
-data['spec']['template']['spec']['containers'][0]['image'] = "{ECR_REPOSITORY_URL}:dev"
+data['spec']['template']['spec']['containers'][0]['image'] = \
+    ECR_REPOSITORY_URL + ":dev"
 
 # Write the updated YAML file
 with open('./k8s-flask/app-deployment.yaml', 'w') as f:
