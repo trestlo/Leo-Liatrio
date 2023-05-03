@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: leo-flask
+  labels:
+    app: leo-flask
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: leo-flask
+  template:
+    metadata:
+      labels:
+        app: leo-flask
+    spec:
+      containers:
+      - name: leo-flask-container
+        image: IMAGE
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+          - containerPort: 8080
