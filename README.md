@@ -28,3 +28,6 @@ Run the deployment python script:
 ```sh
 python3 deploy.py
 ```
+
+The deployment script will handle everything from creating the infrastructure in AWS to building the Docker image.
+The script will prompt for when everything should be cleaned up, and it will then dismantle and delete all built objects.

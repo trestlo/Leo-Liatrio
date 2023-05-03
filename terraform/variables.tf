@@ -16,12 +16,6 @@ variable "instance_type" {
   default     = "t2.large"
 }
 
-variable "region" {
-  description = "AWS region"
-  type        = string
-  default     = "us-west-2"
-}
-
 variable "vpc_cidr_block" {
   type        = string
   default     = "10.20.0.0/16"
